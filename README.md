@@ -2,6 +2,14 @@
 
 A command-line tool to generate a tree structure of a folder and its contents, useful for when you need to add context to your GPT prompts.
 
+## Features
+
+- Generates a visual representation of a directory's structure
+- Supports customizable depth limiting
+- Allows excluding specific files and directories
+- Provides options to include or exclude hidden files
+- Output can be saved to a file or copied to the clipboard
+
 ## Usage
 
 ### Installation
@@ -17,7 +25,7 @@ pip install tree_maker_cli
 Once installed, you can call the tool with the command
 
 ```sh
-tree-maker [arguments]
+tree-maker [options] [directory]
 ```
 
 If called without arguments, it will print the tree structure from the current folder. If called with a valid folder path, it will print the tree structure from that location.
@@ -47,3 +55,6 @@ To save to a text file:
 tree-maker [arguments] --output path/to/output.txt
 ```
 
+## License
+
+This project is licensed under the [MIT License](LICENSE).
