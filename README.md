@@ -9,7 +9,7 @@ A command-line tool to generate a tree structure of a folder and its contents, u
 Install via `pip`:
 
 ```sh
-pip install tree_maker_cli
+pip install tree-maker-cli
 ```
 
 ### Using this tool
