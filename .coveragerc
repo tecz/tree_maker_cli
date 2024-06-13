@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = tree_maker_cli
+source = tree_maker
 
 [report]
 exclude_lines =
