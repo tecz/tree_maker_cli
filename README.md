@@ -44,6 +44,9 @@ The following arguments are available:
  + `--output` (or `-o`): Set the output file path
  + `--exclude`: Files and/or folders to exclude from the tree
  + `--show-hidden`: Show hidden files in the tree structure
+ + `--show-excluded`: Show a list of the files/folders excluded from the tree by default
+ + `--add-excluded`: Add files or folders to the list of files and folders excluded by default
+ + `--remove-excluded`: Remove files or folders from the list of files/folders excluded by default
 
 For example, to print a tree of depth two with hidden files and excluding the folders `public`, `tmp`, and `log` and then copy it to the clipboard:
 
