@@ -1,6 +1,7 @@
 import argparse
 import os
 from tree_maker.tree import generate_tree
+from tree_maker.config import load_excluded_files, add_default_excluded_files, remove_default_excluded_files
 
 def main():
   parser = argparse.ArgumentParser(description='Generate a tree structure of a folder.')
@@ -8,10 +9,37 @@ def main():
   parser.add_argument('--depth', type=int, help='Maximum depth of the tree structure (default: unlimited)')
   parser.add_argument('--exclude', nargs='*', default=[], help='Additional files to exclude from the tree structure')
   parser.add_argument('--show-hidden', action='store_true', help='Show hidden files in the tree structure')
-  parser.add_argument('--output', '-o', type=str, help='Output file path')
+  parser.add_argument('--output', '-o', type=str, help='Output the tree to a file located at the OUTPUT file path')
   parser.add_argument('--clipboard', '-c', action='store_true', help='Copy the tree to the clipboard')
+  parser.add_argument('--add-excluded', nargs='*', default=[], help='Add files/folders to the list of default excluded files and folders')
+  parser.add_argument('--remove-excluded', nargs='*', default=[], help='Remove files/folders from the list of default excluded files and folders')
+  parser.add_argument('--show-excluded', action='store_true', help='Show the current list of default excluded files and folders')
 
   args = parser.parse_args()
+
+  add_excluded_files = args.add_excluded
+  remove_excluded_files = args.remove_excluded
+  show_excluded_files = args.show_excluded
+
+  if show_excluded_files:
+    print("Current default excluded files/folders:")
+    for file in load_excluded_files():
+      print(file)
+    return
+
+  if add_excluded_files:
+    add_default_excluded_files(add_excluded_files)
+    print("Added to default excluded files/folders:")
+    for file in add_excluded_files:
+      print(file)
+    return
+
+  if remove_excluded_files:
+    remove_default_excluded_files(remove_excluded_files)
+    print("Removed from default excluded files/folders:")
+    for file in remove_excluded_files:
+      print(file)
+    return
 
   folder_path = args.folder_path
   depth = args.depth
