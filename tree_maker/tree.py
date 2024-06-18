@@ -7,6 +7,7 @@ def generate_tree(folder, depth, show_hidden, prefix='', excluded_files=None):
     excluded_files = []
 
   excluded_files.extend(DEFAULT_EXCLUDED_FILES)
+  excluded_files = list(set(excluded_files))
   folders, files = sort_directory_contents(folder, excluded_files, show_hidden)
   return build_tree(folder, folders, files, depth, show_hidden, prefix, excluded_files)
 

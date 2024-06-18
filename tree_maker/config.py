@@ -10,7 +10,7 @@ def load_excluded_files():
   try:
     with open(EXCLUDED_FILES_FILE, 'r') as file:
       return json.load(file)
-  except FileNotFoundError:
+  except (FileNotFoundError, json.JSONDecodeError):
     return DEFAULT_EXCLUDED_FILES
 
 def save_excluded_files(files):

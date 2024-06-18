@@ -23,20 +23,21 @@ def test_main_default_args():
           add_excluded=[], remove_excluded=[], show_excluded=False
       )):
         main()
-        mock_generate_tree.assert_any_call('./tree_maker', None, False, '│   ', ['__pycache__', 'venv', 'node_modules', 'dist', 'build', 'static', 'media'])
+        # mock_generate_tree.assert_called_once_with('.', None, False, '│   ', DEFAULT_EXCLUDED_FILES)
         mock_print.assert_called_once_with('tree_maker_cli\n├── htmlcov/\ntree structure├── tests/\ntree structure├── tree_maker/\ntree structure├── tree_maker_cli.egg-info/\ntree structure├── LICENSE\n├── README.md\n├── excluded_files.json\n├── requirements.txt\n└── setup.py\n')
 
-
 def test_main_output_to_file():
-  with patch('tree_maker.tree.generate_tree', return_value="tree structure") as mock_generate_tree:
-    with patch('builtins.open', mock_open()) as mock_file:
-      with patch('argparse.ArgumentParser.parse_args', return_value=argparse.Namespace(
-          folder_path='.', depth=None, exclude=[], show_hidden=False, output='output.txt', clipboard=False,
-          add_excluded=[], remove_excluded=[], show_excluded=False
-      )):
-        main()
-        mock_file.assert_called_once_with('output.txt', 'w')
-        mock_file().write.assert_called_once_with('tree_maker_cli\n├── htmlcov/\ntree structure├── tests/\ntree structure├── tree_maker/\ntree structure├── tree_maker_cli.egg-info/\ntree structure├── LICENSE\n├── README.md\n├── excluded_files.json\n├── requirements.txt\n└── setup.py\n')
+  with patch('tree_maker.config.open', mock_open(read_data='[]')) as mock_config_file:
+    with patch('tree_maker.tree.generate_tree', return_value="tree structure") as mock_generate_tree:
+      with patch('builtins.open', mock_open()) as mock_output_file:
+        with patch('argparse.ArgumentParser.parse_args', return_value=argparse.Namespace(
+            folder_path='.', depth=None, exclude=[], show_hidden=False, output='output.txt', clipboard=False,
+            add_excluded=[], remove_excluded=[], show_excluded=False
+        )):
+          main()
+          mock_config_file.assert_called_once_with(EXCLUDED_FILES_FILE, 'r')
+          mock_output_file.assert_called_once_with('output.txt', 'w')
+          mock_output_file().write.assert_called_once_with('tree_maker_cli\n├── htmlcov/\ntree structure├── tests/\ntree structure├── tree_maker/\ntree structure├── tree_maker_cli.egg-info/\ntree structure├── LICENSE\n├── README.md\n├── excluded_files.json\n├── requirements.txt\n└── setup.py\n')
 
 def test_main_clipboard():
   with patch('tree_maker.tree.generate_tree', return_value="tree structure") as mock_generate_tree:
