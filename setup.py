@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
   name='tree_maker_cli',
-  version='1.0.1',
+  version='1.0.2',
   packages=find_packages(),
   entry_points={
     'console_scripts': [
