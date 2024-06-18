@@ -1,7 +1,7 @@
 import json
 
 DEFAULT_EXCLUDED_FILES = [
-  '__pycache__', 'venv', 'node_modules', 'dist', 'build', 'static', 'media'
+  '__pycache__', 'venv', 'node_modules', 'dist', 'build', 'static', 'media', 'htmlcov'
 ]
 
 EXCLUDED_FILES_FILE = 'excluded_files.json'

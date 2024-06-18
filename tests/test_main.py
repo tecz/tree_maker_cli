@@ -24,7 +24,7 @@ def test_main_default_args():
       )):
         main()
         # mock_generate_tree.assert_called_once_with('.', None, False, '│   ', DEFAULT_EXCLUDED_FILES)
-        mock_print.assert_called_once_with('tree_maker_cli\n├── htmlcov/\ntree structure├── tests/\ntree structure├── tree_maker/\ntree structure├── tree_maker_cli.egg-info/\ntree structure├── LICENSE\n├── README.md\n├── excluded_files.json\n├── requirements.txt\n└── setup.py\n')
+        mock_print.assert_called_once_with('tree_maker_cli\n├── tests/\ntree structure├── tree_maker/\ntree structure├── tree_maker_cli.egg-info/\ntree structure├── LICENSE\n├── README.md\n├── excluded_files.json\n├── requirements.txt\n└── setup.py\n')
 
 def test_main_output_to_file():
   with patch('tree_maker.config.open', mock_open(read_data='[]')) as mock_config_file:
@@ -37,7 +37,7 @@ def test_main_output_to_file():
           main()
           mock_config_file.assert_called_once_with(EXCLUDED_FILES_FILE, 'r')
           mock_output_file.assert_called_once_with('output.txt', 'w')
-          mock_output_file().write.assert_called_once_with('tree_maker_cli\n├── htmlcov/\ntree structure├── tests/\ntree structure├── tree_maker/\ntree structure├── tree_maker_cli.egg-info/\ntree structure├── LICENSE\n├── README.md\n├── excluded_files.json\n├── requirements.txt\n└── setup.py\n')
+          mock_output_file().write.assert_called_once_with('tree_maker_cli\n├── tests/\ntree structure├── tree_maker/\ntree structure├── tree_maker_cli.egg-info/\ntree structure├── LICENSE\n├── README.md\n├── excluded_files.json\n├── requirements.txt\n└── setup.py\n')
 
 def test_main_clipboard():
   with patch('tree_maker.tree.generate_tree', return_value="tree structure") as mock_generate_tree:
@@ -47,7 +47,7 @@ def test_main_clipboard():
           add_excluded=[], remove_excluded=[], show_excluded=False
       )):
         main()
-        mock_copy.assert_called_once_with('tree_maker_cli\n├── htmlcov/\ntree structure├── tests/\ntree structure├── tree_maker/\ntree structure├── tree_maker_cli.egg-info/\ntree structure├── LICENSE\n├── README.md\n├── excluded_files.json\n├── requirements.txt\n└── setup.py\n')
+        mock_copy.assert_called_once_with('tree_maker_cli\n├── tests/\ntree structure├── tree_maker/\ntree structure├── tree_maker_cli.egg-info/\ntree structure├── LICENSE\n├── README.md\n├── excluded_files.json\n├── requirements.txt\n└── setup.py\n')
 
 def test_main_clipboard_exception():
   with patch('tree_maker.tree.generate_tree', return_value="tree structure") as mock_generate_tree:
@@ -58,7 +58,7 @@ def test_main_clipboard_exception():
       )):
         with patch('builtins.print') as mock_print:
           main()
-          mock_copy.assert_called_once_with('tree_maker_cli\n├── htmlcov/\ntree structure├── tests/\ntree structure├── tree_maker/\ntree structure├── tree_maker_cli.egg-info/\ntree structure├── LICENSE\n├── README.md\n├── excluded_files.json\n├── requirements.txt\n└── setup.py\n')
+          mock_copy.assert_called_once_with('tree_maker_cli\n├── tests/\ntree structure├── tree_maker/\ntree structure├── tree_maker_cli.egg-info/\ntree structure├── LICENSE\n├── README.md\n├── excluded_files.json\n├── requirements.txt\n└── setup.py\n')
 
 def test_remove_excluded_files(tmpdir):
   # Add some excluded files first
@@ -68,7 +68,7 @@ def test_remove_excluded_files(tmpdir):
   # Then test removing some of the excluded files
   with patch('sys.argv', ['tree_maker', '--remove-excluded', 'venv', 'dist', 'file1']):
     main()
-  assert load_excluded_files() == ['__pycache__', 'node_modules', 'build', 'static', 'media', 'file2']
+  assert load_excluded_files() == ['__pycache__', 'node_modules', 'build', 'static', 'media', 'htmlcov', 'file2']
 
 def test_show_excluded_files(capsys):
   with patch('sys.argv', ['tree_maker', '--show-excluded']):
