@@ -43,7 +43,7 @@ def main():
 
   folder_path = args.folder_path
   depth = args.depth
-  excluded_files = args.exclude
+  excluded_files = load_excluded_files() + args.exclude
   show_hidden = args.show_hidden
 
   tree_structure = generate_tree(folder_path, depth, show_hidden, excluded_files=excluded_files)
